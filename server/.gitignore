@@ -3,3 +3,5 @@ bld/
 *.exe
 *.out
 *.app
+*.ilk
+*.pdb
