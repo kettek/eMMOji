@@ -1,5 +1,5 @@
 #pragma once
-#include <websocketpp/config/asio.hpp>
+#include <websocketpp/config/asio_no_tls.hpp>
 
 struct ConnectionData {
   int session_id;
