@@ -29,6 +29,31 @@ void Server::onMessage(websocketpp::connection_hdl hdl, server::message_ptr msg)
   mServer.send(hdl, msg->get_payload(), msg->get_opcode());
 
 }
+
+void Server::onHttp(websocketpp::connection_hdl hdl) {
+	// FIXME: This is both insecure and temporary -- websockets++ is not meant for HTTP, but it is easier for testing to handle here
+	server::endpoint::connection_ptr con = mServer.get_con_from_hdl(hdl);
+	std::stringstream	output;
+	std::ifstream		file;
+	std::string			filename;
+
+	// open file
+	filename = con->get_resource();
+	if (filename == "/" || filename == "") {
+		filename = "/index.html";
+	}
+	file.open("../client"+filename);
+	// 404
+	if (!file.good()) {
+		con->set_status(websocketpp::http::status_code::not_found);
+		return;
+	}
+	// send file
+	con->set_status(websocketpp::http::status_code::ok);
+	output << file.rdbuf();
+	con->set_body(output.str());
+	file.close();
+}
 /* NOT HANDLERS */
 void Server::gogogo(uint16_t port) {
   mServer.listen(port);
