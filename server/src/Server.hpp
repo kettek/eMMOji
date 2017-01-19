@@ -15,6 +15,7 @@ class Server {
     void onOpen(websocketpp::connection_hdl);
     void onClose(websocketpp::connection_hdl hdl);
     void onMessage(websocketpp::connection_hdl hdl, server::message_ptr msg);
+	void onHttp(websocketpp::connection_hdl);
     void gogogo(uint16_t port);
 };
 }

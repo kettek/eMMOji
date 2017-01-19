@@ -1,4 +1,6 @@
 #include "Server.hpp"
+#include <future> // for HTTP handler
+#include <fstream>
 
 namespace eMMOji {
 Server::Server() {
@@ -7,6 +9,7 @@ Server::Server() {
   mServer.set_open_handler(bind(&Server::onOpen, this, websocketpp::lib::placeholders::_1));
   mServer.set_close_handler(bind(&Server::onClose, this, websocketpp::lib::placeholders::_1));
   mServer.set_message_handler(bind(&Server::onMessage, this, websocketpp::lib::placeholders::_1, websocketpp::lib::placeholders::_2));
+  mServer.set_http_handler(bind(&Server::onHttp, this, websocketpp::lib::placeholders::_1));
 }
 
 /* HANDLERS */
