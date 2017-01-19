@@ -1,0 +1,5 @@
+bld/
+
+*.exe
+*.out
+*.app
