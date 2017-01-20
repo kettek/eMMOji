@@ -20,6 +20,7 @@ project "eMMOji"
     links { "pthread", "z", "ssl", "crypto", "rt" }
   configuration "windows"
     links { "notelemetry.obj" }
+    defines { "_SCL_SECURE_NO_WARNINGS" }
 
   filter "configurations:Debug"
     defines { "DEBUG" }
