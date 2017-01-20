@@ -1,6 +1,8 @@
 [submodule "server/ext/websocketpp"]
 	path = server/ext/websocketpp
 	url = https://github.com/zaphoyd/websocketpp.git
+  branch = 0.7.0
 [submodule "server/ext/asio"]
 	path = server/ext/asio
 	url = https://github.com/chriskohlhoff/asio.git
+  branch = asio-1-10-8
