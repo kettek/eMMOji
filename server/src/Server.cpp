@@ -5,27 +5,34 @@
 namespace eMMOji {
 Server::Server() {
   mServer.init_asio();
+  // disable logging for now
+  mServer.clear_access_channels(websocketpp::log::alevel::all);
 
   mServer.set_open_handler(bind(&Server::onOpen, this, websocketpp::lib::placeholders::_1));
   mServer.set_close_handler(bind(&Server::onClose, this, websocketpp::lib::placeholders::_1));
   mServer.set_message_handler(bind(&Server::onMessage, this, websocketpp::lib::placeholders::_1, websocketpp::lib::placeholders::_2));
+  std::cout << "Running temporary HTTP handler" << std::endl;
   mServer.set_http_handler(bind(&Server::onHttp, this, websocketpp::lib::placeholders::_1));
 }
 
 /* HANDLERS */
 void Server::onOpen(websocketpp::connection_hdl hdl) {
-  mServer.get_con_from_hdl(hdl)->session_id = mNextSessionId++;
+  server::connection_ptr con = mServer.get_con_from_hdl(hdl);
+
+  con->session_id = mIdPool.getId();
+  std::cout << "Opening new connection with id " << con->session_id << std::endl;
 }
 
 void Server::onClose(websocketpp::connection_hdl hdl) {
   server::connection_ptr con = mServer.get_con_from_hdl(hdl);
-  
+
   std::cout << "Closing " << con->name << " with id " << con->session_id << std::endl;
+  mIdPool.revokeId(con->session_id);
 }
 
 void Server::onMessage(websocketpp::connection_hdl hdl, server::message_ptr msg) {
   server::connection_ptr con = mServer.get_con_from_hdl(hdl);
-  std::cout << "Message from client: " << msg->get_payload();
+  std::cout << "Message from client: " << msg->get_payload() << std::endl;
   mServer.send(hdl, msg->get_payload(), msg->get_opcode());
 
 }
