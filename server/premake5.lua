@@ -11,7 +11,7 @@ project "eMMOji"
   location ("bld/" .. _ACTION)
 
   files { "src/**.cpp", "src/**.hpp" }
-  includedirs { "src/", "src/*", "ext/websocketpp", "ext/asio/asio/include" }
+  includedirs { "src/", "src/*", "ext/websocketpp", "ext/asio/asio/include", "ext/rapidjson/include" }
 
   defines { "ASIO_STANDALONE", "_WEBSOCKETPP_CPP11_FUNCTIONAL_", "_WEBSOCKETPP_CPP11_SYSTEM_ERROR_", "_WEBSOCKETPP_CPP11_RANDOM_DEVICE_", "_WEBSOCKETPP_CPP11_MEMORY_", "_WEBSOCKETPP_CPP11_STL_" }
 

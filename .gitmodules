@@ -6,3 +6,6 @@
 	path = server/ext/asio
 	url = https://github.com/chriskohlhoff/asio.git
   branch = asio-1-10-8
+[submodule "server/ext/rapidjson"]
+	path = server/ext/rapidjson
+	url = https://github.com/miloyip/rapidjson.git
